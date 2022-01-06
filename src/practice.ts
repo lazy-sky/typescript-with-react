@@ -39,9 +39,7 @@ interface Person {
   name: string;
   age?: number; // ?는 옵셔널 값이라는 의미.
 }
-interface Developer {
-  name: string;
-  age?: number;
+interface Developer extends Person {
   skills: string[];
 }
 
