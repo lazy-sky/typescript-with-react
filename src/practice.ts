@@ -9,9 +9,8 @@ interface Shape {
 
 // implements 키워드를 사용하여 해당 클래스가 Shape interface 의 조건을 충족하겠다는 것을 명시.
 class Circle implements Shape {
-  radius: number;
-
-  constructor(radius: number) {
+  // constructor의 파라미터에 public 또는 private 접근자를 사용하면 직접 설정하는 작업을 생략할 수 있다.
+  constructor(public radius: number) {
     this.radius = radius;
   }
 
@@ -21,10 +20,8 @@ class Circle implements Shape {
 }
 
 class Rectangle implements Shape {
-  width: number;
-  height: number;
-
-  constructor(width: number, height: number) {
+  // public과 달리 private과 함께 선언된 값은 클래스의 코드 밖에서 조회할 수 없다.
+  constructor(private width: number, private height: number) {
     this.width = width;
     this.height = height;
   }
