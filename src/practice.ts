@@ -30,3 +30,22 @@ function wrap<T>(param: T) {
 }
 
 const wrapped = wrap(10);
+
+interface Items<T> {
+  list: T[];
+}
+
+// Items<string> -> Items 타입의 객체의 list 배열은 string[] 타입을 갖게 된다.
+// 이를 통해 list가 숫자 배열인 경우, 문자열 배열인 경우 등 어떤 배열인 경우에도 하나의 interface로 타입을 설정할 수 있다.
+const items: Items<string> = {
+  list: ["a", "b", "c"],
+};
+
+// Type alias에서 Generic 사용하기
+type ItemsTypeVersion<T> = {
+  list: T[];
+};
+
+const itemsTypeVersion: ItemsTypeVersion<string> = {
+  list: ["a", "b", "c"],
+};
