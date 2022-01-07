@@ -1,13 +1,28 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
+
+// 이렇게 액션을 | 로 연달아서 나열.
+// 여기선 액션에 type 값만 존재하여 간단하지만, 이후 다른 값들도 명시해주는 경우엔,
+// 추후 리듀서를 작성할 때 액션 객체 안에 무엇이 들어있는지도 자동완성을 통해 알 수 있다.
+// 새로운 액션을 디스패치할 때도 액션에 대한 타입스크립트 타입 검사도 해준다.
+type Action = { type: 'INCREASE' } | { type: 'DECREASE' };
+
+// 리듀서를 만들 땐 아래와 같이
+// 파라미터로 받아오는 상태의 타입과 함수가 리턴하는 타입을 동일하게 하는 것이 중요하다.
+function reducer(state: number, action: Action): number {
+  switch (action.type) {
+    case 'INCREASE':
+      return state + 1;
+    case 'DECREASE':
+      return state - 1;
+    default:
+      throw new Error('Unhandled action');
+  }
+}
 
 function Counter() {
-  // 사실 useState를 사용할 때 제너릭을 사용하지 않아도 알아서 타입을 유추하기 때문에 생략해도 된다.
-  // 상태가 null일 수도 있고 아닐 수도 있을 때 제네릭을 활용하면 좋다.
-  // 상태의 타입이 까다로운 구조를 가진 객체이거나 배열일 때는 제네릭을 명시하는 게 좋다.
-
-  const [count, setCount] = useState(0);
-  const onIncrease = () => setCount((count) => count + 1);
-  const onDecrease = () => setCount((count) => count - 1);
+  const [count, dispatch] = useReducer(reducer, 0);
+  const onIncrease = () => dispatch({ type: 'INCREASE' });
+  const onDecrease = () => dispatch({ type: 'DECREASE' });
 
   return (
     <div>
