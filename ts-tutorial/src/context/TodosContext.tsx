@@ -5,7 +5,7 @@
 // TodoForm 컴포넌트처럼 상태는 필요하지 않고, 디스패치 함수만 필요한 컴포넌트도
 // 상태가 업데이트될 때 리렌더링하게 된다.
 
-import { createContext, Dispatch, useReducer } from 'react';
+import { createContext, Dispatch, useReducer, useContext } from 'react';
 
 export type Todo = {
   id: number;
@@ -82,4 +82,19 @@ export function TodosContextProvider({
       </TodosStateContext.Provider>
     </TodosDispatchContext.Provider>
   );
+}
+
+// 커스텀 Hooks
+// useContext를 사용해서 컨텍스트 안의 값을 사용할 수 있다.
+export function useTodosState() {
+  const state = useContext(TodosStateContext);
+  // todos의 타입은 TodosState이거나 undefined일 수 있기 때문에 널 체킹해준다.
+  if (!state) throw new Error('TodosProvider not found');
+  return state;
+}
+
+export function useTodosDispatch() {
+  const dispatch = useContext(TodosDispatchContext);
+  if (!dispatch) throw new Error('TodosProvider not found');
+  return dispatch;
 }
