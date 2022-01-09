@@ -1,23 +1,8 @@
 import TodoItem from './TodoItem';
+import { useTodosState } from '../context/TodosContext';
 
 function TodoList() {
-  const todos = [
-    {
-      id: 1,
-      text: 'To learn typescript with context api',
-      done: false,
-    },
-    {
-      id: 2,
-      text: 'Chores',
-      done: true,
-    },
-    {
-      id: 3,
-      text: 'Final project',
-      done: false,
-    },
-  ];
+  const todos = useTodosState();
 
   return (
     <ul>
