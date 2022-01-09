@@ -5,7 +5,7 @@
 // TodoForm 컴포넌트처럼 상태는 필요하지 않고, 디스패치 함수만 필요한 컴포넌트도
 // 상태가 업데이트될 때 리렌더링하게 된다.
 
-import { createContext, Dispatch } from 'react';
+import { createContext, Dispatch, useReducer } from 'react';
 
 export type Todo = {
   id: number;
@@ -50,4 +50,36 @@ function todosReducer(state: TodosState, action: Action): TodosState {
     default:
       throw new Error('Unhandled action');
   }
+}
+
+export function TodosContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [todos, dispatch] = useReducer(todosReducer, [
+    {
+      id: 1,
+      text: 'Context API 배우기',
+      done: true,
+    },
+    {
+      id: 2,
+      text: 'TypeScript 배우기',
+      done: true,
+    },
+    {
+      id: 3,
+      text: 'TypeScript 와 Context API 함께 사용하기',
+      done: false,
+    },
+  ]);
+
+  return (
+    <TodosDispatchContext.Provider value={dispatch}>
+      <TodosStateContext.Provider value={todos}>
+        {children}
+      </TodosStateContext.Provider>
+    </TodosDispatchContext.Provider>
+  );
 }
