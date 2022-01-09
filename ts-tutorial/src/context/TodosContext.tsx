@@ -13,12 +13,12 @@ export type Todo = {
   done: boolean;
 };
 
-type TodoState = Todo[];
+type TodosState = Todo[];
 
 // 상태 전용 컨텍스트
 // 컨텍스트를 만들 땐 아래와 같이 제네릭을 사용하여 컨텍스트에서 관리할 값의 상태를 설정할 수 있다.
 // 추후 Provider를 사용하지 않았을 때는 컨텍스트의 값이 undefined가 되야하므로, 아래와 같이 선언한다.
-const TodosStateContext = createContext<TodoState | undefined>(undefined);
+const TodosStateContext = createContext<TodosState | undefined>(undefined);
 
 type Action =
   | { type: 'CREATE'; text: string }
@@ -31,3 +31,23 @@ type TodosDispatch = Dispatch<Action>;
 const TodosDispatchContext = createContext<TodosDispatch | undefined>(
   undefined,
 );
+
+function todosReducer(state: TodosState, action: Action): TodosState {
+  switch (action.type) {
+    case 'CREATE':
+      const nextId = Math.max(...state.map((todo) => todo.id)) + 1;
+      return state.concat({
+        id: nextId,
+        text: action.text,
+        done: false,
+      });
+    case 'TOGGLE':
+      return state.map((todo) =>
+        todo.id === action.id ? { ...todo, done: !todo.done } : todo,
+      );
+    case 'REMOVE':
+      return state.filter((todo) => todo.id !== action.id);
+    default:
+      throw new Error('Unhandled action');
+  }
+}
