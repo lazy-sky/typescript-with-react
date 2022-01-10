@@ -1,9 +1,9 @@
 import { Todo } from "../modules/todos";
 import TodoItem from "./TodoItem";
+import useTodos from "../hooks/useTodos";
 
 function TodoList() {
-  // TODO: 커스텀 훅으로 조회
-  const todos: Todo[] = [];
+  const todos: Todo[] = useTodos();
   if (todos.length === 0) return <p>등록된 항목이 없습니다.</p>;
 
   return (

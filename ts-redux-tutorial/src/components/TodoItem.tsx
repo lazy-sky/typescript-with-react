@@ -1,16 +1,23 @@
 import "./TodoItem.css";
 import { Todo } from "../modules/todos";
+import { useToggleTodo, useRemoveTodo } from "../hooks/useTodoActions";
 
 type TodoItemProps = {
   todo: Todo;
 };
 
 function TodoItem({ todo }: TodoItemProps) {
-  // TODO: 커스텀 훅으로 onToggle, onRemove 구현
+  const onToggle = useToggleTodo();
+  const onRemove = useRemoveTodo();
+
   return (
     <li className={`TodoItem ${todo.done ? "done" : ""}`}>
-      <span>{todo.text}</span>
-      <span>(X)</span>
+      <span className="text" onClick={() => onToggle(todo.id)}>
+        {todo.text}
+      </span>
+      <span className="remove" onClick={() => onRemove(todo.id)}>
+        (X)
+      </span>
     </li>
   );
 }

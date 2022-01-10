@@ -51,7 +51,7 @@ function todos(
       });
     case TOGGLE_TODO:
       return state.map((todo) =>
-        todo.id === action.payload ? { ...todo, done: todo.done } : todo
+        todo.id === action.payload ? { ...todo, done: !todo.done } : todo
       );
     case REMOVE_TODO:
       return state.filter((todo) => todo.id !== action.payload);

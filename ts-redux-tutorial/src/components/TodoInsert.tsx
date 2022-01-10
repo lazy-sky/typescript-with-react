@@ -1,7 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import useAddTodo from "../hooks/useAddTodo";
 
 function TodoInsert() {
   const [value, setValue] = useState("");
+  const addTodo = useAddTodo();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -9,8 +11,7 @@ function TodoInsert() {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: 커스텀 훅으로 새 항목 등록
-    // 사실 간단해서 그냥 여기서 useDispatch를 사용해도 된다.
+    addTodo(value);
     setValue("");
   };
 
