@@ -20,7 +20,7 @@ export function getUserProfileThunk(username: string): ThunkAction<void, RootSta
       const userProfile = await getUserProfile(username);
       dispatch(success(userProfile));
     } catch (e) {
-      dispatch(failure(e));
+      dispatch(failure(e.code));
     }
   };
 }
